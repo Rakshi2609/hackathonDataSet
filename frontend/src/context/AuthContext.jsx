@@ -4,6 +4,7 @@ export const AuthContext = createContext();
 
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   // Load saved user from localStorage when app starts
   useEffect(() => {
@@ -11,6 +12,7 @@ export default function AuthProvider({ children }) {
     if (savedUser) {
       setUser(JSON.parse(savedUser));
     }
+    setLoading(false);
   }, []);
 
   // Login function (save token + user)
@@ -28,7 +30,7 @@ export default function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

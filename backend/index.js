@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import path from "path"; // Required for file paths
+import { fileURLToPath } from "url"; // Required for ES Modules
 import connectDB from "./db.js";
 
 // Routes
@@ -10,12 +12,20 @@ import chatRoutes from "./routes/chatRoutes.js";
 
 dotenv.config();
 
+// Fix for __dirname in ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // Initialize app
 const app = express();
 
 // Middlewares
 app.use(cors());
 app.use(express.json());
+
+// --- ADD THIS LINE TO FIX IMAGE LOADING ---
+// This serves the 'uploads' folder so http://localhost:5000/uploads/file.jpg works
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Connect Database
 connectDB();

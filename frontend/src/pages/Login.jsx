@@ -22,7 +22,9 @@ export default function Login() {
       const res = await loginUser(form);
       login(res.data);
       toast.success("Login successful!");
-      navigate("/dashboard");
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 500);
     } catch (err) {
       toast.error(err.response?.data?.message || "Authentication failed.");
     } finally {
