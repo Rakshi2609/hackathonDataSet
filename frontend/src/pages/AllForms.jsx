@@ -45,7 +45,7 @@ export default function AllForms() {
           
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Link
-              to="/submit-form" // Update this route to your actual submission path
+              to="/create-form" // Update this route to your actual submission path
               className="flex items-center gap-2 bg-stone-900 text-white px-5 py-3 rounded-2xl shadow-lg shadow-stone-200 text-sm font-bold"
             >
               <Plus size={18} />
