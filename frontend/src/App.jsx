@@ -1,4 +1,5 @@
   import { BrowserRouter, Routes, Route } from "react-router-dom";
+  import { Toaster } from "react-hot-toast";
 
   // Pages
   import Home from "./pages/Home";
@@ -18,6 +19,7 @@
   export default function App() {
     return (
       <AuthProvider>
+        <Toaster position="top-right" />
         <BrowserRouter>
           <Routes>
 
