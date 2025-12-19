@@ -9,6 +9,7 @@ import connectDB from "./db.js";
 import authRoutes from "./routes/authRoutes.js";
 import healthFormRoutes from "./routes/healthFormRoutes.js";
 import chatRoutes from "./routes/chatRoutes.js";
+import doctorRoutes from "./routes/doctorRoutes.js";
 
 dotenv.config();
 
@@ -39,6 +40,7 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/form", healthFormRoutes);
 app.use("/api/chat", chatRoutes);
+app.use("/api/doctors", doctorRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
