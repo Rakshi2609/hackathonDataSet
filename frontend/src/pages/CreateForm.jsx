@@ -32,9 +32,8 @@ export default function CreateForm() {
     image: null,
     imagePreview: null,
     throat: { difficultySwallowing: false, throatPain: false },
-    skin: { rash: false, itching: false, swelling: false, redness: false },
+    skin: { itching: false, swelling: false, redness: false }, // Internal key remains 'skin'
     respiratory: { breathlessness: false, chestTightness: false },
-    cardiovascular: { chestPain: false },
     diabetes: {
       bloodSugar: "",
       frequentThirst: false,
@@ -68,7 +67,6 @@ export default function CreateForm() {
     setLoading(true);
     try {
       const formData = new FormData();
-      // Basic Vitals
       formData.append("heartRate", Number(form.heartRate));
       formData.append("spo2", Number(form.spo2));
       formData.append("temperature", Number(form.temperature));
@@ -80,12 +78,11 @@ export default function CreateForm() {
         })
       );
 
-      // Branching Data
       formData.append("problemArea", form.problemArea);
       formData.append("bodyPart", form.bodyPart);
       if (form.image) formData.append("image", form.image);
 
-      // Detailed Symptoms based on selection
+      // This sends the data as 'skin' to match your backend expectation
       formData.append(form.problemArea, JSON.stringify(form[form.problemArea]));
 
       await createForm(formData);
@@ -188,7 +185,6 @@ export default function CreateForm() {
                       onChange={handleChange}
                       value={form.temperature}
                     />
-                    {/* Blood Pressure Section inside Step 1 */}
                     <div className="grid grid-cols-2 gap-4 pt-4 border-t border-stone-100 mt-4">
                       <VitalInput
                         name="systolic"
@@ -211,9 +207,12 @@ export default function CreateForm() {
                     <select
                       name="bodyPart"
                       onChange={handleChange}
+                      value={form.bodyPart}
                       className="w-full px-5 py-4 bg-stone-50 border border-stone-100 rounded-2xl font-bold outline-none appearance-none"
                     >
                       <option value="">Select Analysis Target...</option>
+                      <option value="left_eye">Left Eye</option>
+                      <option value="right_eye">Right Eye</option>
                       <option value="tongue">Tongue</option>
                       <option value="posture">Posture</option>
                     </select>
@@ -221,13 +220,14 @@ export default function CreateForm() {
                       {form.imagePreview ? (
                         <img
                           src={form.imagePreview}
+                          alt="Preview"
                           className="w-full h-full object-cover"
                         />
                       ) : (
                         <div className="text-center group-hover:scale-110 transition-transform">
                           <Camera className="mx-auto text-stone-300 mb-2" />
                           <p className="text-xs font-bold text-stone-400">
-                            Tap to Upload
+                            Tap to Upload Eye Photo
                           </p>
                         </div>
                       )}
@@ -268,16 +268,17 @@ export default function CreateForm() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {[
                     "throat",
-                    "skin",
+                    "eye", // UI says "eye"
                     "respiratory",
-                    "cardiovascular",
                     "diabetes",
                   ].map((area) => (
                     <button
                       key={area}
-                      onClick={() => setForm({ ...form, problemArea: area })}
+                      onClick={() => 
+                        setForm({ ...form, problemArea: area === "eye" ? "skin" : area })
+                      }
                       className={`p-5 rounded-[22px] border-2 text-left font-bold capitalize transition-all ${
-                        form.problemArea === area
+                        (area === "eye" ? form.problemArea === "skin" : form.problemArea === area)
                           ? "bg-stone-900 text-white border-stone-900 shadow-lg"
                           : "bg-white border-stone-100 text-stone-400"
                       }`}
@@ -304,7 +305,7 @@ export default function CreateForm() {
               </motion.div>
             )}
 
-            {/* STEP 3: FULL SYMPTOM LIST */}
+            {/* STEP 3: SYMPTOMS */}
             {step === 3 && (
               <motion.div
                 key="step3"
@@ -317,11 +318,12 @@ export default function CreateForm() {
                     Symptom Log
                   </h1>
                   <p className="text-stone-500 text-sm font-medium">
-                    Refining details for {form.problemArea}
+                    Refining details for {form.problemArea === "skin" ? "eye" : form.problemArea}
                   </p>
                 </header>
 
                 <div className="bg-stone-50 p-6 rounded-[32px] space-y-3">
+                  {/* THROAT SYMPTOMS */}
                   {form.problemArea === "throat" &&
                     ["difficultySwallowing", "throatPain"].map((f) => (
                       <Checkbox
@@ -332,16 +334,28 @@ export default function CreateForm() {
                       />
                     ))}
 
-                  {form.problemArea === "skin" &&
-                    Object.keys(form.skin).map((s) => (
+                  {/* EYE SYMPTOMS (USING SKIN STATE) */}
+                  {form.problemArea === "skin" && (
+                    <>
                       <Checkbox
-                        key={s}
-                        label={s}
-                        checked={form.skin[s]}
-                        onChange={() => handleNestedChange("skin", s)}
+                        label="Eye Itching"
+                        checked={form.skin.itching}
+                        onChange={() => handleNestedChange("skin", "itching")}
                       />
-                    ))}
+                      <Checkbox
+                        label="Eyelid Swelling"
+                        checked={form.skin.swelling}
+                        onChange={() => handleNestedChange("skin", "swelling")}
+                      />
+                      <Checkbox
+                        label="Eye Redness"
+                        checked={form.skin.redness}
+                        onChange={() => handleNestedChange("skin", "redness")}
+                      />
+                    </>
+                  )}
 
+                  {/* RESPIRATORY SYMPTOMS */}
                   {form.problemArea === "respiratory" &&
                     ["breathlessness", "chestTightness"].map((f) => (
                       <Checkbox
@@ -352,16 +366,7 @@ export default function CreateForm() {
                       />
                     ))}
 
-                  {form.problemArea === "cardiovascular" && (
-                    <Checkbox
-                      label="Chest Pain"
-                      checked={form.cardiovascular.chestPain}
-                      onChange={() =>
-                        handleNestedChange("cardiovascular", "chestPain")
-                      }
-                    />
-                  )}
-
+                  {/* DIABETES SYMPTOMS */}
                   {form.problemArea === "diabetes" && (
                     <div className="space-y-4">
                       <VitalInput
@@ -424,6 +429,7 @@ export default function CreateForm() {
   );
 }
 
+// Sub-components
 function VitalInput({ label, icon, ...props }) {
   return (
     <div className="space-y-1.5 flex-1 text-left">

@@ -8,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="Multi-Model Health Screening API")
 
+# Enable CORS so Node.js can talk to FastAPI
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -19,15 +20,21 @@ app.add_middleware(
 # --- LOAD MODELS ---
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# 1. Throat Model
-THROAT_PATH = os.path.join(BASE_DIR, "..", "model", "throat_disease_cnn.tflite")
-throat_interp = tf.lite.Interpreter(model_path=THROAT_PATH)
-throat_interp.allocate_tensors()
+# 1. Throat Model Path
+THROAT_PATH = os.path.join(BASE_DIR, ".", "model", "throat_disease_cnn.tflite")
+# 2. Eye Model Path (Ensure this file is in the 'nirvik' folder)
+EYE_PATH = os.path.join(BASE_DIR,".", "model","eye_disease_float16.tflite")
 
-# 2. Eye/Skin Model
-EYE_PATH = os.path.join(BASE_DIR, "eye_disease_float16.tflite") # Adjust path as needed
-eye_interp = tf.lite.Interpreter(model_path=EYE_PATH)
-eye_interp.allocate_tensors()
+def load_model(path):
+    if not os.path.exists(path):
+        print(f"❌ ERROR: Model file not found at {path}")
+        return None
+    interpreter = tf.lite.Interpreter(model_path=path)
+    interpreter.allocate_tensors()
+    return interpreter
+
+throat_interp = load_model(THROAT_PATH)
+eye_interp = load_model(EYE_PATH)
 
 EYE_CLASSES = ["Bulging_Eyes", "Cataracts", "Crossed_Eyes", "Glaucoma", "Uveitis"]
 
@@ -35,7 +42,7 @@ EYE_CLASSES = ["Bulging_Eyes", "Cataracts", "Crossed_Eyes", "Glaucoma", "Uveitis
 def run_tflite_eye(image_path):
     img = cv2.imread(image_path)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    img = cv2.resize(img, (300, 300)) # Eye model size
+    img = cv2.resize(img, (300, 300)) 
     img = (img / 255.0).astype(np.float32)
     img = np.expand_dims(img, axis=0)
     
@@ -48,7 +55,7 @@ def run_tflite_eye(image_path):
 
 def run_tflite_throat(image_path):
     img = cv2.imread(image_path)
-    img = cv2.resize(img, (224, 224)) # Throat model size
+    img = cv2.resize(img, (224, 224))
     img = (img / 255.0).astype(np.float32)
     img = np.expand_dims(img, axis=0)
     
@@ -60,9 +67,10 @@ def run_tflite_throat(image_path):
     return throat_interp.get_tensor(output_details[0]["index"])[0][0]
 
 # --- ENDPOINTS ---
+
 @app.post("/predict/throat")
 async def predict_throat(file: UploadFile = File(...)):
-    with tempfile.NamedTemporaryFile(delete=False) as tmp:
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as tmp:
         tmp.write(await file.read())
         tmp_path = tmp.name
     try:
@@ -73,9 +81,13 @@ async def predict_throat(file: UploadFile = File(...)):
     finally:
         os.remove(tmp_path)
 
+# THIS MUST BE /predict/eye TO MATCH YOUR NODE.JS CODE
 @app.post("/predict/eye")
 async def predict_eye(file: UploadFile = File(...)):
-    with tempfile.NamedTemporaryFile(delete=False) as tmp:
+    if not eye_interp:
+        return {"error": "Eye model not loaded"}
+        
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as tmp:
         tmp.write(await file.read())
         tmp_path = tmp.name
     try:
