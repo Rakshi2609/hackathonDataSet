@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# Ignore node_modules and environment files
+node_modules/
+.env
+*.pkl
+*.tflite
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
