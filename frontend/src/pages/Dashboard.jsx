@@ -10,7 +10,8 @@ import {
   LogOut, 
   User, 
   ChevronRight,
-  Shield
+  Shield,
+  Stethoscope
 } from "lucide-react";
 
 export default function Dashboard() {
@@ -89,9 +90,17 @@ export default function Dashboard() {
           <DashboardCard 
             to="/chat"
             icon={<MessageSquare className="text-purple-500" />}
-            title="AI Consultant"
-            description="Discuss diagnostic insights with AI"
+            title="Mental Health Support"
+            description="Get empathetic support and feel better"
             color="bg-purple-50"
+          />
+
+          <DashboardCard 
+            to="/doctors"
+            icon={<Stethoscope className="text-orange-500" />}
+            title="Find Doctors"
+            description="Discover nearby healthcare professionals"
+            color="bg-orange-50"
           />
 
         </div>
