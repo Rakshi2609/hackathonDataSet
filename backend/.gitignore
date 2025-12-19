@@ -1,4 +1,9 @@
+# Ignore node_modules, environment, and large/model files
 node_modules/
 .env
 *.pkl
 *.tflite
+*.h5
+*.dll
+*.pyd
+venv/

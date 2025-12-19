@@ -1,2 +1,7 @@
+# Ignore model and large files
 *.pkl
 *.tflite
+*.h5
+*.dll
+*.pyd
+venv/
