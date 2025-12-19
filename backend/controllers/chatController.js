@@ -60,22 +60,85 @@ ${JSON.stringify(formData[formData.problemArea], null, 2)}
 Based on this data, provide friendly health advice, answer questions, and give helpful tips about diet, lifestyle, and wellness. Be conversational and supportive.`;
 }
 
-// Helper: Build system prompt for main chatbot
-function buildMainSystemPrompt(latestForm) {
-  if (!latestForm) {
-    return `You are a friendly health assistant chatbot. Help users with general health questions, wellness tips, and encourage them to fill out health forms to get personalized advice.`;
+// Helper: Build system prompt for main chatbot (Mental Health Support)
+function buildMainSystemPrompt(latestForm, messages = []) {
+  // Analyze user's mood from conversation history
+  const hasMoodIndicators = messages.some(msg => 
+    msg.role === 'user' && 
+    (msg.content.toLowerCase().includes('sad') || 
+     msg.content.toLowerCase().includes('anxious') ||
+     msg.content.toLowerCase().includes('stressed') ||
+     msg.content.toLowerCase().includes('depressed') ||
+     msg.content.toLowerCase().includes('worried') ||
+     msg.content.toLowerCase().includes('overwhelmed') ||
+     msg.content.toLowerCase().includes('tired') ||
+     msg.content.toLowerCase().includes('lonely'))
+  );
+
+  const hasPositiveMood = messages.some(msg => 
+    msg.role === 'user' && 
+    (msg.content.toLowerCase().includes('good') || 
+     msg.content.toLowerCase().includes('great') ||
+     msg.content.toLowerCase().includes('happy') ||
+     msg.content.toLowerCase().includes('fine') ||
+     msg.content.toLowerCase().includes('okay'))
+  );
+
+  let personalityPrompt = '';
+  
+  if (messages.length === 0) {
+    // First message - ask about mood
+    personalityPrompt = `You are a warm, empathetic mental health support AI. Your primary role is to:
+1. Start by asking the user how they're feeling today in a caring, genuine way
+2. Listen actively and validate their emotions
+3. Adapt your personality based on their mood and needs
+4. Provide emotional support, encouragement, and coping strategies
+5. Help them feel heard, understood, and better about themselves
+
+Be conversational, compassionate, and never judgmental. Use a warm, friendly tone.`;
+  } else if (hasMoodIndicators) {
+    // User is struggling - be extra supportive
+    personalityPrompt = `You are a deeply empathetic mental health support AI. The user is going through a difficult time. Your role is to:
+1. Validate their feelings and let them know it's okay to feel this way
+2. Offer comfort, understanding, and genuine emotional support
+3. Share gentle coping strategies and positive affirmations
+4. Help them see things from a more hopeful perspective
+5. Be patient, kind, and never dismissive of their struggles
+
+Use a soft, caring, supportive tone. Be there for them like a trusted friend would be.`;
+  } else if (hasPositiveMood) {
+    // User is doing well - be uplifting and encouraging
+    personalityPrompt = `You are an uplifting, positive mental health support AI. The user seems to be in a good space. Your role is to:
+1. Celebrate their positive mood and reinforce it
+2. Encourage them to maintain this positive energy
+3. Share tips for maintaining mental wellness
+4. Be enthusiastic and supportive of their wellbeing
+5. Help them build on this positive momentum
+
+Use an encouraging, warm, and cheerful tone while remaining genuine and supportive.`;
+  } else {
+    // General supportive mode
+    personalityPrompt = `You are a caring mental health support AI. Your role is to:
+1. Listen to what the user is sharing with empathy and understanding
+2. Adapt your support style to their emotional needs
+3. Provide thoughtful, compassionate responses
+4. Offer encouragement and practical mental wellness tips
+5. Help them feel better and more supported
+
+Be warm, genuine, and always put their emotional wellbeing first.`;
   }
 
-  return `You are a friendly health assistant chatbot. You have access to the user's most recent health form:
-
-**Latest Form (${new Date(latestForm.createdAt).toLocaleDateString()}):**
+  if (latestForm) {
+    personalityPrompt += `\n\nYou also have access to the user's recent health information:
 - Heart Rate: ${latestForm.heartRate} bpm
 - SpO2: ${latestForm.spo2}%
 - Temperature: ${latestForm.temperature}°F
 - Blood Pressure: ${latestForm.bloodPressure.systolic}/${latestForm.bloodPressure.diastolic} mmHg
-- Problem Area: ${latestForm.problemArea}
 
-Based on this information, provide personalized health tips, diet recommendations, and lifestyle advice. Be friendly, encouraging, and supportive.`;
+Consider this context when providing holistic mental and physical wellness support.`;
+  }
+
+  return personalityPrompt;
 }
 
 // -------------------- FORM-SPECIFIC CHAT --------------------
@@ -157,7 +220,7 @@ export const chatMain = async (req, res) => {
       });
     }
 
-    const systemPrompt = buildMainSystemPrompt(latestForm);
+    const systemPrompt = buildMainSystemPrompt(latestForm, chatHistory.messages);
     const mistralMessages = [
       { role: "system", content: systemPrompt },
       ...chatHistory.messages.map((msg) => ({

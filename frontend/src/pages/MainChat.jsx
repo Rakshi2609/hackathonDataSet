@@ -93,10 +93,10 @@ export default function MainChat() {
             <Activity className="text-white w-5 h-5" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-stone-900 leading-none">Health Assistant</h1>
+            <h1 className="text-xl font-bold text-stone-900 leading-none">Mental Health Support</h1>
             <div className="flex items-center gap-1.5 mt-1">
                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-               <span className="text-[10px] font-black text-stone-400 uppercase tracking-widest">Medical LLM Active</span>
+               <span className="text-[10px] font-black text-stone-400 uppercase tracking-widest">Empathetic AI Active</span>
             </div>
           </div>
         </div>
@@ -122,9 +122,9 @@ export default function MainChat() {
                 <Sparkles size={32} className="text-blue-500" />
               </div>
               <div className="max-w-xs">
-                 <h2 className="text-xl font-bold text-stone-900 mb-2">Welcome, Doctor</h2>
+                 <h2 className="text-xl font-bold text-stone-900 mb-2">Hi there! How are you feeling today?</h2>
                  <p className="text-sm font-medium text-stone-500 leading-relaxed">
-                   How can I assist you today? I can help with wellness trends, general diagnostic advice, or nutrition insights.
+                   I'm here to listen and support you. Share what's on your mind, and I'll adapt my approach to help you feel better.
                  </p>
               </div>
             </motion.div>
@@ -183,7 +183,7 @@ export default function MainChat() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={(e) => e.key === "Enter" && handleSend()}
-            placeholder="Ask anything about health and wellness..."
+            placeholder="Share how you're feeling today..."
             className="flex-1 px-5 py-3.5 bg-transparent text-stone-900 placeholder-stone-400 outline-none font-medium text-sm"
             disabled={loading}
           />
@@ -204,7 +204,7 @@ export default function MainChat() {
               <span className="text-[10px] font-black tracking-widest uppercase">Encrypted</span>
            </div>
            <div className="w-1 h-1 rounded-full bg-stone-400" />
-           <span className="text-[10px] font-black tracking-widest uppercase tracking-[0.3em]">HealthSync AI</span>
+           <span className="text-[10px] font-black tracking-widest uppercase tracking-[0.3em]">MindCare AI</span>
         </div>
       </footer>
     </div>

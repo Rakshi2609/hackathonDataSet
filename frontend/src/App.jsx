@@ -11,6 +11,7 @@
   import FormDetails from "./pages/FormDetails";
   import MainChat from "./pages/MainChat";
   import FormChat from "./pages/FormChat";
+  import NearbyDoctors from "./pages/NearbyDoctors";
 
   // Auth Context + Protected Route
   import AuthProvider from "./context/AuthContext";
@@ -79,6 +80,15 @@
               element={
                 <ProtectedRoute>
                   <FormChat />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/doctors"
+              element={
+                <ProtectedRoute>
+                  <NearbyDoctors />
                 </ProtectedRoute>
               }
             />

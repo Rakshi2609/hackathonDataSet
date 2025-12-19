@@ -1,0 +1,206 @@
+[
+  {
+    "id": 1,
+    "name": "Dr. Sarah Johnson",
+    "specialty": "General Physician",
+    "rating": 4.8,
+    "experience": "15 years",
+    "clinic": "HealthCare Medical Center",
+    "location": {
+      "address": "Anna Salai, Teynampet",
+      "city": "Chennai",
+      "lat": 12.8399,
+      "lng": 80.1554
+    },
+    "contact": "+91 98765 43210",
+    "availability": "Mon-Fri: 9AM-5PM",
+    "image": "https://randomuser.me/api/portraits/women/44.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Dr. Michael Chen",
+    "specialty": "Cardiologist",
+    "rating": 4.9,
+    "experience": "20 years",
+    "clinic": "Heart & Vascular Institute",
+    "location": {
+      "address": "Nungambakkam High Road",
+      "city": "Chennai",
+      "lat": 12.8450,
+      "lng": 80.1600
+    },
+    "contact": "+91 98765 43211",
+    "availability": "Mon-Sat: 10AM-6PM",
+    "image": "https://randomuser.me/api/portraits/men/32.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Dr. Emily Rodriguez",
+    "specialty": "Pediatrician",
+    "rating": 4.7,
+    "experience": "12 years",
+    "clinic": "Kids Care Pediatric Clinic",
+    "location": {
+      "address": "T. Nagar, Ranganathan Street",
+      "city": "Chennai",
+      "lat": 12.8350,
+      "lng": 80.1500
+    },
+    "contact": "+91 98765 43212",
+    "availability": "Mon-Fri: 8AM-4PM",
+    "image": "https://randomuser.me/api/portraits/women/68.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Dr. James Patterson",
+    "specialty": "Orthopedic Surgeon",
+    "rating": 4.9,
+    "experience": "18 years",
+    "clinic": "Bone & Joint Specialty Center",
+    "location": {
+      "address": "Adyar, Gandhi Nagar",
+      "city": "Chennai",
+      "lat": 12.8300,
+      "lng": 80.1620
+    },
+    "contact": "+91 98765 43213",
+    "availability": "Tue-Sat: 9AM-5PM",
+    "image": "https://randomuser.me/api/portraits/men/67.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Dr. Priya Sharma",
+    "specialty": "Dermatologist",
+    "rating": 4.8,
+    "experience": "10 years",
+    "clinic": "Radiance Skin Care Center",
+    "location": {
+      "address": "Alwarpet, TTK Road",
+      "city": "Chennai",
+      "lat": 12.8420,
+      "lng": 80.1570
+    },
+    "contact": "+91 98765 43214",
+    "availability": "Mon-Fri: 10AM-6PM",
+    "image": "https://randomuser.me/api/portraits/women/89.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Dr. Robert Williams",
+    "specialty": "Psychiatrist",
+    "rating": 4.9,
+    "experience": "22 years",
+    "clinic": "MindWell Mental Health Center",
+    "location": {
+      "address": "Mylapore, Luz Church Road",
+      "city": "Chennai",
+      "lat": 12.8380,
+      "lng": 80.1540
+    },
+    "contact": "+91 98765 43215",
+    "availability": "Mon-Sat: 9AM-7PM",
+    "image": "https://randomuser.me/api/portraits/men/54.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Dr. Lisa Thompson",
+    "specialty": "Ophthalmologist",
+    "rating": 4.7,
+    "experience": "14 years",
+    "clinic": "ClearVision Eye Care Plaza",
+    "location": {
+      "address": "Saidapet, GN Chetty Road",
+      "city": "Chennai",
+      "lat": 12.8460,
+      "lng": 80.1510
+    },
+    "contact": "+91 98765 43216",
+    "availability": "Mon-Fri: 8AM-5PM",
+    "image": "https://randomuser.me/api/portraits/women/23.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Dr. David Kumar",
+    "specialty": "ENT Specialist",
+    "rating": 4.8,
+    "experience": "16 years",
+    "clinic": "Advanced ENT & Hearing Clinic",
+    "location": {
+      "address": "Kilpauk, Poonamallee High Road",
+      "city": "Chennai",
+      "lat": 12.8480,
+      "lng": 80.1580
+    },
+    "contact": "+91 98765 43217",
+    "availability": "Tue-Sat: 10AM-6PM",
+    "image": "https://randomuser.me/api/portraits/men/78.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Dr. Angela Martinez",
+    "specialty": "Neurologist",
+    "rating": 4.9,
+    "experience": "17 years",
+    "clinic": "Brain & Spine Neurology Center",
+    "location": {
+      "address": "Velachery, Velachery Main Road",
+      "city": "Chennai",
+      "lat": 12.8320,
+      "lng": 80.1480
+    },
+    "contact": "+91 98765 43218",
+    "availability": "Mon-Fri: 9AM-6PM",
+    "image": "https://randomuser.me/api/portraits/women/32.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Dr. Kevin Lee",
+    "specialty": "Gastroenterologist",
+    "rating": 4.8,
+    "experience": "13 years",
+    "clinic": "Digestive Health Specialists",
+    "location": {
+      "address": "Porur, Mount Poonamallee Road",
+      "city": "Chennai",
+      "lat": 12.8440,
+      "lng": 80.1640
+    },
+    "contact": "+91 98765 43219",
+    "availability": "Mon-Thu: 8AM-5PM",
+    "image": "https://randomuser.me/api/portraits/men/45.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Dr. Sophia Anderson",
+    "specialty": "Endocrinologist",
+    "rating": 4.7,
+    "experience": "11 years",
+    "clinic": "Hormone & Diabetes Care Center",
+    "location": {
+      "address": "Anna Nagar, Thirumangalam",
+      "city": "Chennai",
+      "lat": 12.8360,
+      "lng": 80.1520
+    },
+    "contact": "+91 98765 43220",
+    "availability": "Tue-Sat: 9AM-5PM",
+    "image": "https://randomuser.me/api/portraits/women/56.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Dr. Marcus Brown",
+    "specialty": "Pulmonologist",
+    "rating": 4.9,
+    "experience": "19 years",
+    "clinic": "Respiratory Health Institute",
+    "location": {
+      "address": "Kodambakkam, Arcot Road",
+      "city": "Chennai",
+      "lat": 12.8410,
+      "lng": 80.1590
+    },
+    "contact": "+91 98765 43221",
+    "availability": "Mon-Fri: 10AM-6PM",
+    "image": "https://randomuser.me/api/portraits/men/89.jpg"
+  }
+]
